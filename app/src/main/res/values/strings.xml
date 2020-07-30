@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Shred It</string>
+    <string name="nav_open">Open Navigation Bar</string>
+    <string name="nav_close">Close Navigation Bar</string>
+    <string name="item_removed_message">Content Removed</string>
+    <string name="undo">Undo</string>
+    <string name="dialog_title_auth">Authentication</string>
+    <string name="dialog_msg_auth">Please authenticate the device</string>
+    <string name="Title">Shred It</string>
+    <string name="sub_title">Secure Erase Files Forever!</string>
+
+    <string name="shredF">Shred Files</string>
+    <string name="shredD">Shred Directories</string>
+    <string name="shredEs">Shred External Storage</string>
+    <string name="shredIs">Shred Internal Storage</string>
+    <string name="shredFRs">Shred Fress Space</string>
+    <string name="chkspace">Check Fress Space</string>
+    <string name="credits">Rizwan Akhwandzada</string>
+
+    <!--    Image descriptions  -->
+
+    <string name="logo">Logo of the App</string>
+    <string name="shred_file">Press for Shredding files</string>
+    <string name="shred_dir">Press for Shredding Directories</string>
+    <string name="shred_FRs">Press for Shredding Free Space</string>
+    <string name="shred_IS">Press for Shredding Internal Storage</string>
+    <string name="shred_ES">Press for Shredding External Storage</string>
+    <string name="check_Fs">Check Free Space</string>
+
+
+</resources>

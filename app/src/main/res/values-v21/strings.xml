@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="item_removed_message">Content Removed</string>
+    <string name="undo">Undo</string>
+    <string name="shredF">Shred Files</string>
+    <string name="shredD">Shred Directories</string>
+    <string name="shredEs">Shred External Storage</string>
+    <string name="shredIs">Shred Internal Storage</string>
+    <string name="shredFRs">Shred Fress Space</string>
+    <string name="chkspace">Check Fress Space</string>
+    <string name="credits">Rizwan Akhwandzada</string>
+</resources>
