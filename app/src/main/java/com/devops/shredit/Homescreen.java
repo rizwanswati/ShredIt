@@ -34,6 +34,7 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
     public static final int READ_PERMISSION = 002;
     public static final int REMOVABLE_STORAGE_REQUEST = 003;
     private static final int INTENT_AUTHENTICATE = 004;
+
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -248,6 +249,12 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
                 }
             }
         }
+    }
+
+    public void Go(View view) {
+
+        Intent intent = new Intent(Homescreen.this, AlgoShreddingScreen.class);
+        startActivity(intent);
     }
 
 //    public void space(View view) {
