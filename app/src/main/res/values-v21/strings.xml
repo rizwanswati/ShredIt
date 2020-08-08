@@ -9,4 +9,11 @@
     <string name="shredFRs">Shred Fress Space</string>
     <string name="chkspace">Check Fress Space</string>
     <string name="credits">Rizwan Akhwandzada</string>
+
+    <string name="one_byte">One Byte</string>
+    <string name="gutman">Gutman 35 Pass</string>
+    <string name="VSITR">German VSITR</string>
+    <string name="schneire">Schneire</string>
+    <string name="DoD">US DoD</string>
+    <string name="DoD_Ext">DoD Extended</string>
 </resources>
