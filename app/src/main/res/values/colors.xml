@@ -8,6 +8,8 @@
     <color name="whitish">#FFFFFF</color>
     <color name="Title_Black">#2B2B2B</color>
     <color name="sub_title">#3C3C3C</color>
+    <color name="progress_tint">#03DAC5</color>
+    <color name="progress_bg_tint">#97EAE2</color>
 
 
 </resources>

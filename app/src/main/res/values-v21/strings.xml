@@ -16,4 +16,6 @@
     <string name="schneire">Schneire</string>
     <string name="DoD">US DoD</string>
     <string name="DoD_Ext">DoD Extended</string>
+
+    <string name="shredding_btn">Start Shredding</string>
 </resources>
