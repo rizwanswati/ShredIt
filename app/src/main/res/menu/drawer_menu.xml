@@ -10,6 +10,13 @@
             app:actionLayout="@layout/pass_switch" />
 
         <item
+            android:id="@+id/homescr"
+            android:icon="@drawable/homescr"
+            android:title="Home">
+
+        </item>
+
+        <item
             android:id="@+id/support"
             android:icon="@drawable/feedback24px"
             android:title="Support" />

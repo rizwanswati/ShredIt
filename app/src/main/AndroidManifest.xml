@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AlgoShreddingScreen"></activity>
+        <activity android:name=".About"></activity>
+        <activity android:name=".Help" />
+        <activity android:name=".Support" />
+        <activity android:name=".AlgoShreddingScreen" />
         <activity android:name=".TestBed" />
         <activity android:name=".Homescreen">
             <intent-filter>

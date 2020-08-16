@@ -9,8 +9,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -33,58 +35,46 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
     public static final int WRITE_PERMISSION = 001;
     public static final int READ_PERMISSION = 002;
     public static final int REMOVABLE_STORAGE_REQUEST = 003;
-    private static final int INTENT_AUTHENTICATE = 004;
+
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
     private Shredder Shredder;
 
+
+    /*Singleton Pattern Implementation*/
+    ObjectGenerator objectGenerator = new ObjectGenerator();
+
+    Security security = objectGenerator.SecurityObj();
+    Permissions permission = objectGenerator.PermissionObj();
+    DesignedViews designedViews = objectGenerator.DesignViewObj();
+    Generalhelper generalhelper = objectGenerator.GeneralHelperObj();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppAuthenticate();
+        /*App authentications*/
+        security.AppAuthenticate(this, this);
+        /*Permissions*/
+        permission.AppPermissions(this, this);
+        /*NavigationItemSelectedListener*/
     }
 
-    private void AppAuthenticate() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-            if (km.isKeyguardSecure()) {
-                Intent authIntent = km.createConfirmDeviceCredentialIntent(getString(R.string.dialog_title_auth), getString(R.string.dialog_msg_auth));
-                startActivityForResult(authIntent, INTENT_AUTHENTICATE);
-            }
-        }
-    }
+//    private void AppAuthenticate() {
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//            KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+//            if (km.isKeyguardSecure()) {
+//                Intent authIntent = km.createConfirmDeviceCredentialIntent(getString(R.string.dialog_title_auth), getString(R.string.dialog_msg_auth));
+//                startActivityForResult(authIntent, INTENT_AUTHENTICATE);
+//            }
+//        }
+//    }
 
-    private void setContentsViews() {
-        /*-------------Requesting Storage permission-------------*/
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-            }, WRITE_PERMISSION);
-        }
-
-
-        /*------------------Attachments----------------------*/
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
-        /*----------------------------------------------------*/
-
-        /*----------------Using custom toolbar as actionbar-----------------*/
-        setSupportActionBar(toolbar);
-
-        /*--------------------------Drawer Toggle------------------------*/
-        navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-    }
 
     @Override
     public void onBackPressed() {
+        drawerLayout = findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
@@ -95,12 +85,9 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.exit:
-                ExitDialouge();
-                break;
-        }
+        generalhelper.ItemSelected(item.getItemId(), this, this);
 
+        drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -194,41 +181,17 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
 //
 //        }
 //
-        if (requestCode == INTENT_AUTHENTICATE) {
-            if (resultCode == RESULT_OK) {
-                setContentView(R.layout.activity_homescreen);
-                setContentsViews();
+        if (requestCode == Security.INTENT_AUTHENTICATE) {
+            if (security.AuthenticateReqResult(resultCode)) {
+                designedViews.setHomeScreen(this);
+                navigationView = designedViews.setNavigationContents(this, this);
+                navigationView.setNavigationItemSelectedListener(this);
+
             } else {
                 AppExitWithoutDialouge();
             }
         }
 
-    }
-
-    private void ExitDialouge() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Exit Application?");
-        alertDialogBuilder
-                .setMessage("Click yes to exit!")
-                .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                moveTaskToBack(true);
-                                android.os.Process.killProcess(android.os.Process.myPid());
-                                System.exit(1);
-                            }
-                        })
-
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 
     private void AppExitWithoutDialouge() {
@@ -240,15 +203,7 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         //as there can be many requests for permission so evaluation based on request code using switch
-        switch (requestCode) {
-            case WRITE_PERMISSION: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Access Denied", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
+        permission.PermissionReqResult(this, requestCode, permissions, grantResults);
     }
 
     public void Go(View view) {
