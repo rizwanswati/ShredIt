@@ -53,7 +53,7 @@ public class ObjectGenerator {
         return new Homescreen();
     }
 
-    protected Object ShredderObj() {
+    protected Shredder ShredderObj() {
         return new Shredder();
     }
 

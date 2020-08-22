@@ -105,7 +105,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5.5"
                     android:background="@drawable/btnshape"
-                    android:onClick="Go"
+                    android:onClick="pickFile"
                     android:orientation="vertical">
 
                     <ImageView
@@ -138,6 +138,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5.5"
+                    android:onClick="pickDir"
                     android:background="@drawable/btnshape"
                     android:orientation="vertical">
 
@@ -194,6 +195,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5.5"
                     android:background="@drawable/btnshape"
+                    android:onClick="ShredInternalFreeSpace"
                     android:orientation="vertical">
 
                     <ImageView
@@ -227,6 +229,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5.5"
                     android:background="@drawable/btnshape"
+                    android:onClick="shredInternal"
                     android:orientation="vertical">
 
                     <ImageView
@@ -281,6 +284,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5.5"
                     android:background="@drawable/btnshape"
+                    android:onClick="spaceCheck"
                     android:orientation="vertical">
 
                     <ImageView
@@ -314,6 +318,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5.5"
                     android:background="@drawable/btnshape"
+                    android:onClick="shredRemovable"
                     android:orientation="vertical">
 
                     <ImageView

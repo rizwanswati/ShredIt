@@ -1,6 +1,8 @@
 package com.devops.shredit;
 
+import android.os.Handler;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -233,7 +235,8 @@ public class Shredder {
      * @param passes   the number of times the files gets overwritten
      * @throws IOException if no file or directory with <code>fileName</code> exists
      */
-    public final boolean wipeRandom(String fileName, boolean leaveDir, int mode, int passes) throws IOException {
+    public final boolean wipeRandom(String fileName, boolean leaveDir, int mode, int passes, boolean Internal_Free) throws IOException {
+
         s_fileName = fileName;
         s_file = new File(s_fileName);
         s_fileSize = s_file.length();
@@ -256,13 +259,17 @@ public class Shredder {
                 s_fileSize = s_file.length();
                 if (s_file.isFile())
                     writeRandom(mode, passes);
-                unNameAndDelete(s_fileName);
+                if (!Internal_Free) {
+                    unNameAndDelete(s_fileName);
+                }
             }
             return true;
         } else // it's a single file, not a directory
         {
             writeRandom(mode, passes);
-            unNameAndDelete(s_fileName);
+            if (!Internal_Free) {
+                unNameAndDelete(s_fileName);
+            }
             return false;
         }
     }
@@ -282,7 +289,7 @@ public class Shredder {
      * @param floppyMode if true, only random and floppy passes will be written
      * @throws IOException if no file or directory with <code>fileName</code> exists
      */
-    public final boolean wipeGutmann(String fileName, boolean leaveDir, boolean floppyMode) throws IOException {
+    public final boolean wipeGutmann(String fileName, boolean leaveDir, boolean floppyMode, boolean Internal_Free) throws IOException {
         s_fileName = fileName;
         s_file = new File(s_fileName);
         s_fileSize = s_file.length();
@@ -325,7 +332,10 @@ public class Shredder {
                     }
                     writeRandom(4);
                 }
-                unNameAndDelete(s_fileName);
+
+                if (!Internal_Free) {
+                    unNameAndDelete(s_fileName);
+                }
             }
             return true;
         } else // it's a single file, not a directory
@@ -344,7 +354,9 @@ public class Shredder {
                     writeThreeBytes(PATTERN_ARRAY_3_BYTES[s_sequence[j] - 26]);
             }
             writeRandom(4);
-            unNameAndDelete(s_fileName);
+            if (!Internal_Free) {
+                unNameAndDelete(s_fileName);
+            }
             return true;
         }
     }
@@ -360,7 +372,7 @@ public class Shredder {
      * @param leaveDir if true and if the <code>fileName</code> is a directory, it won't be deleted
      * @throws IOException if no file or directory with <code>fileName</code> exists
      */
-    public final boolean wipeVSITR(String fileName, boolean leaveDir) throws IOException {
+    public final boolean wipeVSITR(String fileName, boolean leaveDir, boolean Internal_Free) throws IOException {
         s_fileName = fileName;
         s_file = new File(s_fileName);
         s_fileSize = s_file.length();
@@ -389,7 +401,9 @@ public class Shredder {
                     writeOneByte(BYTE_AA);
                     writeRandom(1);
                 }
-                unNameAndDelete(s_fileName);
+                if (!Internal_Free) {
+                    unNameAndDelete(s_fileName);
+                }
             }
             return true;
         } else // it's a single file, not a directory
@@ -402,7 +416,9 @@ public class Shredder {
             writeOneByte(BYTE_FF);
             writeOneByte(BYTE_AA);
             writeRandom(1);
-            unNameAndDelete(s_fileName);
+            if (!Internal_Free) {
+                unNameAndDelete(s_fileName);
+            }
             return true;
         }
     }
@@ -414,7 +430,7 @@ public class Shredder {
      * @param leaveDir if true and if the <code>fileName</code> is a directory, it won't be deleted
      * @throws IOException if no file or directory with <code>fileName</code> exists
      */
-    public final boolean wipeSchneier(String fileName, boolean leaveDir) throws IOException {
+    public final boolean wipeSchneier(String fileName, boolean leaveDir, boolean Internal_Free) throws IOException {
         s_fileName = fileName;
         s_file = new File(s_fileName);
         s_fileSize = s_file.length();
@@ -438,7 +454,9 @@ public class Shredder {
                     writeOneByte(BYTE_FF);
                     writeRandom(5);
                 }
-                unNameAndDelete(s_fileName);
+                if (!Internal_Free) {
+                    unNameAndDelete(s_fileName);
+                }
             }
             return true;
 
@@ -447,7 +465,9 @@ public class Shredder {
             writeOneByte(BYTE_00);
             writeOneByte(BYTE_FF);
             writeRandom(5);
-            unNameAndDelete(s_fileName);
+            if (!Internal_Free) {
+                unNameAndDelete(s_fileName);
+            }
             return true;
         }
     }
@@ -472,7 +492,7 @@ public class Shredder {
      * @param extended if true the extended version of the
      * @throws IOException if no file or directory with <code>fileName</code> exists
      */
-    public final boolean wipeDoD(String fileName, boolean leaveDir, boolean extended) throws IOException {
+    public final boolean wipeDoD(String fileName, boolean leaveDir, boolean extended, boolean Internal_Free) throws IOException {
         boolean check = false;
         s_fileName = fileName;
         s_file = new File(s_fileName);
@@ -482,18 +502,17 @@ public class Shredder {
             throw new FileNotFoundException("File to delete could not been found: " + s_fileName);
 
         if (extended) {
-            if (writeDoDExtended(fileName, leaveDir)) {
-                check = true;
+            if (writeDoDExtended(fileName, leaveDir, Internal_Free)) {
+                return true;
+            } else {
+                return false;
             }
         } else {
-            if (writeDoD(fileName, leaveDir)) {
-                check = true;
+            if (writeDoD(fileName, leaveDir, Internal_Free)) {
+                return true;
+            } else {
+                return false;
             }
-        }
-        if (check) {
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -510,7 +529,7 @@ public class Shredder {
      * @param leaveDir if true and if the fileName is a directory, it won't be deleted
      * @throws IOException if no file or directory with <code>fileName</code> exists
      */
-    private final boolean writeDoD(String fileName, boolean leaveDir) throws IOException {
+    private final boolean writeDoD(String fileName, boolean leaveDir, boolean Internal_Free) throws IOException {
         if (s_file.isDirectory()) {
             final FileList fileList = new FileList();
             final List<String> files = fileList.getFilePathList(fileName);
@@ -527,8 +546,10 @@ public class Shredder {
                     writeOneByte(BYTE_FF);
                     writeRandom(1);
                 }
-                unNameAndDelete(s_fileName);
-                Log.w("SHREDDED", s_fileName + "=" + i);
+                if (!Internal_Free) {
+                    unNameAndDelete(s_fileName);
+                    Log.w("SHREDDED", s_fileName + "=" + i);
+                }
             }
             return true;
 
@@ -537,7 +558,9 @@ public class Shredder {
             writeOneByte(BYTE_00);
             writeOneByte(BYTE_FF);
             writeRandom(1);
-            unNameAndDelete(s_fileName);
+            if (!Internal_Free) {
+                unNameAndDelete(s_fileName);
+            }
             return true;
         }
     }
@@ -558,7 +581,7 @@ public class Shredder {
      * @param leaveDir if true and if the <code>fileName</code> is a directory, it won't be deleted
      * @throws IOException if no file or directory with <code>fileName</code> exists
      */
-    private final boolean writeDoDExtended(String fileName, boolean leaveDir) throws IOException {
+    private final boolean writeDoDExtended(String fileName, boolean leaveDir, boolean Internal_Free) throws IOException {
         if (s_file.isDirectory()) {
             final FileList fileList = new FileList();
             final List<String> files = fileList.getFilePathList(fileName);
@@ -579,7 +602,9 @@ public class Shredder {
                     writeOneByte(BYTE_FF);
                     writeRandom(1);
                 }
-                unNameAndDelete(s_fileName);
+                if (!Internal_Free) {
+                    unNameAndDelete(s_fileName);
+                }
             }
             return true;
 
@@ -592,8 +617,9 @@ public class Shredder {
             writeOneByte(BYTE_00);
             writeOneByte(BYTE_FF);
             writeRandom(1);
-
-            unNameAndDelete(s_fileName);
+            if (!Internal_Free) {
+                unNameAndDelete(s_fileName);
+            }
             return true;
         }
     }
