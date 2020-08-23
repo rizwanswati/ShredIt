@@ -27,6 +27,10 @@ public class Generalhelper {
     IntentCaller intentCaller = objectGenerator.IntentCallerObj();
     public static final String LIST_SIZE = "LIST_SIZE";
     public static final String PROG = "PROG_UPDATE";
+    public static final String BAR = "PROG_BAR";
+    public static final String PATH_DIR = "PATH";
+
+
     Shredder shredder = objectGenerator.ShredderObj();
     private int progressBarStatus = 0;
     private int counter = 0;
@@ -347,43 +351,45 @@ public class Generalhelper {
                     while (counter < total_files) {
                         String path;
                         for (Uri file : files) {
-
+                            counter++;
                             path = file.getPath();
                             s_fileName = path;
                             s_file = new File(s_fileName);
 
                             if (s_file.isDirectory()) {
-                                counter++;
+
                                 final FileList fileList = new FileList();
                                 final List<String> ListofFiles = fileList.getFilePathList(path);
                                 int listSize = ListofFiles.size();
-                                Log.e(LIST_SIZE, "Size of Dir:=" + listSize);
-                                pbar.setMax(listSize - 1);
+                                pbar.setMax(listSize);
                                 for (int i = 0; i < listSize; i++) {
                                     path = ListofFiles.get(i);
                                     file_path = path;
                                     try {
 
                                         // 1 - Operation
+
                                         if (shredder.wipeRandom(path, false, 2, 1, Internal_Free)) {
-                                            progressBarStatus = i;
+                                            progressBarStatus++;
+                                        }
                                             // 2 - sleep
                                             try {
                                                 Thread.sleep(1000);
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
+                                                ExceptionDebugInfo(e);
                                             }
                                             // 3 - update
                                             progressbarHandler.post(new Runnable() {
                                                 public void run() {
                                                     showProg.setText(file_path);
                                                     pbar.setProgress(progressBarStatus);
-                                                    Log.w(PROG, "progressbarstatus:=" + progressBarStatus);
                                                 }
                                             });
-                                        }
+
                                     } catch (IOException e) {
                                         e.printStackTrace();
+                                        ExceptionDebugInfo(e);
                                     }
                                 }
 //
@@ -391,15 +397,17 @@ public class Generalhelper {
                                 path = file.getPath();
                                 file_path = path;
                                 try {
-                                    counter++;
+
                                     // 1 - operation
                                     if (shredder.wipeRandom(path, false, 2, 1, Internal_Free)) {
                                         progressBarStatus++;
-                                        // 2 - sleep
-                                        try {
+                                    }
+                                    // 2 - sleep
+                                    try {
                                             Thread.sleep(1000);
                                         } catch (InterruptedException e) {
-                                            e.printStackTrace();
+                                        e.printStackTrace();
+                                        ExceptionDebugInfo(e);
                                         }
                                         // 3 - update
                                         progressbarHandler.post(new Runnable() {
@@ -408,7 +416,7 @@ public class Generalhelper {
                                                 pbar.setProgress(progressBarStatus);
                                             }
                                         });
-                                    }
+
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                     ExceptionDebugInfo(e);

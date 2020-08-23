@@ -237,6 +237,7 @@ public class Shredder {
      */
     public final boolean wipeRandom(String fileName, boolean leaveDir, int mode, int passes, boolean Internal_Free) throws IOException {
 
+
         s_fileName = fileName;
         s_file = new File(s_fileName);
         s_fileSize = s_file.length();
@@ -270,7 +271,7 @@ public class Shredder {
             if (!Internal_Free) {
                 unNameAndDelete(s_fileName);
             }
-            return false;
+            return true;
         }
     }
 
