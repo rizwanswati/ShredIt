@@ -9,10 +9,8 @@ import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 
@@ -25,13 +23,8 @@ public class Generalhelper {
 
     ObjectGenerator objectGenerator = new ObjectGenerator();
     IntentCaller intentCaller = objectGenerator.IntentCallerObj();
-    public static final String LIST_SIZE = "LIST_SIZE";
-    public static final String PROG = "PROG_UPDATE";
-    public static final String BAR = "PROG_BAR";
-    public static final String PATH_DIR = "PATH";
-
-
     Shredder shredder = objectGenerator.ShredderObj();
+
     private int progressBarStatus = 0;
     private int counter = 0;
     private String file_path;
@@ -88,7 +81,7 @@ public class Generalhelper {
     protected void AppExitWithoutDialouge(Activity activity) {
         activity.moveTaskToBack(true);
         android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+        System.exit(0);
     }
 
     protected void ShareApp(Context context) {
