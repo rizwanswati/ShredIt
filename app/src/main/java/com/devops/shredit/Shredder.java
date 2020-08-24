@@ -827,10 +827,10 @@ public class Shredder {
             fileNameLength--;
         }
         // }
-        if (!s_file.delete()) {
-            return false;
-        } else {
+        if (s_file.delete()) {
             return true;
+        } else {
+            return false;
         }
 
     }

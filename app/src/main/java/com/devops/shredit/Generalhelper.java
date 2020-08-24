@@ -101,247 +101,10 @@ public class Generalhelper {
         context.startActivity(Intent.createChooser(intent, "Share App"));
     }
 
-    public void CallDoD(ArrayList<Uri> files, boolean Internal_Free, Context context) {
-        if (Internal_Free) {
-            int number_of_files = 5000;
-            String Folder_path = files.toString();
-            try {
-                if (shredder.wipeDoD(Folder_path, false, false, Internal_Free)) {
-                    double remaining_space = FileHelper.ReturnFreeSpace();
-                    Toast.makeText(context, "Internal Shredding Success.! Checking for remaining space.!", Toast.LENGTH_SHORT).show();
-                    if (remaining_space > 0) {
-                        Toast.makeText(context, "remaining Space Available=" + remaining_space, Toast.LENGTH_SHORT).show();
-                        String Rm_Folder_path = FileHelper.CreateDir_File(false, null, 0);
-                        long File_size = (long) (remaining_space / number_of_files);
-                        FileHelper.CreateFiles(Rm_Folder_path, number_of_files, File_size);
-                        shredder.wipeDoD(Folder_path, false, true, Internal_Free);
-                        FileUtils.deleteDirectory(new File(Folder_path));
-                        Toast.makeText(context, "Internal Storage Shredded", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "No more internal space ramaining for shredding", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "Internal Shredding Failed..!", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                ExceptionDebugInfo(e);
-            }
-        } else {
-            String path;
-            for (Uri file : files) {
-                path = file.getPath();
-                try {
-                    shredder.wipeDoD(path, false, false, Internal_Free);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ExceptionDebugInfo(e);
-                }
-            }
-        }
-    }
-
-    public void CallDoDExtended(ArrayList<Uri> files, boolean Internal_Free, Context context) {
-
-        if (Internal_Free) {
-            int number_of_files = 5000;
-            String Folder_path = files.toString();
-            try {
-                if (shredder.wipeDoD(Folder_path, false, true, Internal_Free)) {
-                    double remaining_space = FileHelper.ReturnFreeSpace();
-                    Toast.makeText(context, "Internal Shredding Success.! Checking for remaining space.!", Toast.LENGTH_SHORT).show();
-                    if (remaining_space > 0) {
-                        Toast.makeText(context, "remaining Space Available=" + remaining_space, Toast.LENGTH_SHORT).show();
-                        String Rm_Folder_path = FileHelper.CreateDir_File(false, null, 0);
-                        long File_size = (long) (remaining_space / number_of_files);
-                        FileHelper.CreateFiles(Rm_Folder_path, number_of_files, File_size);
-                        shredder.wipeDoD(Folder_path, false, true, Internal_Free);
-                        FileUtils.deleteDirectory(new File(Folder_path));
-                        Toast.makeText(context, "Internal Storage Shredded", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "No more internal space ramaining for shredding", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "Internal Shredding Failed..!", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                ExceptionDebugInfo(e);
-            }
-        } else {
-            String path;
-            for (Uri file : files) {
-                path = file.getPath();
-                try {
-                    shredder.wipeDoD(path, false, true, Internal_Free);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ExceptionDebugInfo(e);
-                }
-            }
-        }
-    }
-
-
-    public void CallVsiter(ArrayList<Uri> files, boolean Internal_Free, Context context) {
-        if (Internal_Free) {
-            int number_of_files = 5000;
-            String Folder_path = files.toString();
-            try {
-                if (shredder.wipeVSITR(Folder_path, false, Internal_Free)) {
-                    double remaining_space = FileHelper.ReturnFreeSpace();
-                    Toast.makeText(context, "Internal Shredding Success.! Checking for remaining space.!", Toast.LENGTH_SHORT).show();
-                    if (remaining_space > 0) {
-                        Toast.makeText(context, "remaining Space Available=" + remaining_space, Toast.LENGTH_SHORT).show();
-                        String Rm_Folder_path = FileHelper.CreateDir_File(false, null, 0);
-                        long File_size = (long) (remaining_space / number_of_files);
-                        FileHelper.CreateFiles(Rm_Folder_path, number_of_files, File_size);
-                        shredder.wipeVSITR(Rm_Folder_path, false, Internal_Free);
-                        FileUtils.deleteDirectory(new File(Folder_path));
-                        Toast.makeText(context, "Internal Storage Shredded", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "No more internal space ramaining for shredding", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "Internal Shredding Failed..!", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                ExceptionDebugInfo(e);
-            }
-        } else {
-
-            String path;
-            for (Uri file : files) {
-                path = file.getPath();
-                try {
-                    shredder.wipeVSITR(path, false, Internal_Free);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ExceptionDebugInfo(e);
-                }
-            }
-        }
-    }
-
-    public void CallSchneire(ArrayList<Uri> files, boolean Internal_Free, Context context) {
-        if (Internal_Free) {
-            int number_of_files = 5000;
-            String Folder_path = files.toString();
-            try {
-                if (shredder.wipeSchneier(Folder_path, false, Internal_Free)) {
-                    double remaining_space = FileHelper.ReturnFreeSpace();
-                    Toast.makeText(context, "Internal Shredding Success.! Checking for remaining space.!", Toast.LENGTH_SHORT).show();
-                    if (remaining_space > 0) {
-                        Toast.makeText(context, "remaining Space Available=" + remaining_space, Toast.LENGTH_SHORT).show();
-                        String Rm_Folder_path = FileHelper.CreateDir_File(false, null, 0);
-                        long File_size = (long) (remaining_space / number_of_files);
-                        FileHelper.CreateFiles(Rm_Folder_path, number_of_files, File_size);
-                        shredder.wipeSchneier(Rm_Folder_path, false, Internal_Free);
-                        FileUtils.deleteDirectory(new File(Folder_path));
-                        Toast.makeText(context, "Internal Storage Shredded", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "No more internal space ramaining for shredding", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "Internal Shredding Failed..!", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                ExceptionDebugInfo(e);
-            }
-        } else {
-
-            String path;
-            for (Uri file : files) {
-                path = file.getPath();
-                try {
-                    shredder.wipeSchneier(path, false, Internal_Free);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ExceptionDebugInfo(e);
-                }
-            }
-        }
-    }
-
-    public void CallGutman(ArrayList<Uri> files, boolean Internal_Free, Context context) {
-        if (Internal_Free) {
-            int number_of_files = 5000;
-            String Folder_path = files.toString();
-            try {
-                if (shredder.wipeGutmann(Folder_path, false, false, Internal_Free)) {
-                    double remaining_space = FileHelper.ReturnFreeSpace();
-                    Toast.makeText(context, "Internal Shredding Success.! Checking for remaining space.!", Toast.LENGTH_SHORT).show();
-                    if (remaining_space > 0) {
-                        Toast.makeText(context, "remaining Space Available=" + remaining_space, Toast.LENGTH_SHORT).show();
-                        String Rm_Folder_path = FileHelper.CreateDir_File(false, null, 0);
-                        long File_size = (long) (remaining_space / number_of_files);
-                        FileHelper.CreateFiles(Rm_Folder_path, number_of_files, File_size);
-                        shredder.wipeGutmann(Rm_Folder_path, false, false, Internal_Free);
-                        FileUtils.deleteDirectory(new File(Folder_path));
-                        Toast.makeText(context, "Internal Storage Shredded", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "No more internal space ramaining for shredding", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "Internal Shredding Failed..!", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                ExceptionDebugInfo(e);
-            }
-        } else {
-            String path;
-            for (Uri file : files) {
-                path = file.getPath();
-                try {
-                    shredder.wipeGutmann(path, false, false, Internal_Free);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ExceptionDebugInfo(e);
-                }
-            }
-        }
-    }
-
-    public void CallOneByte(ArrayList<Uri> files, boolean Internal_Free, Context context, ProgressBar pbar, TextView showProg) {
-
+    public void CallDoD(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
-
-
         if (Internal_Free) {
-            int number_of_files = 5000;
-            String Folder_path = files.toString();
-            try {
-                if (shredder.wipeRandom(Folder_path, false, 2, 1, Internal_Free)) {
-                    double remaining_space = FileHelper.ReturnFreeSpace();
-                    Toast.makeText(context, "Internal Shredding Success.! Checking for remaining space.!", Toast.LENGTH_SHORT).show();
-                    if (remaining_space > 0) {
-                        Toast.makeText(context, "remaining Space Available=" + remaining_space, Toast.LENGTH_SHORT).show();
-                        String Rm_Folder_path = FileHelper.CreateDir_File(false, null, 0);
-                        long File_size = (long) (remaining_space / number_of_files);
-                        FileHelper.CreateFiles(Rm_Folder_path, number_of_files, File_size);
-                        shredder.wipeRandom(Folder_path, false, 2, 1, Internal_Free);
-                        FileUtils.deleteDirectory(new File(Folder_path));
-                        Toast.makeText(context, "Internal Storage Shredded", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "No more internal space ramaining for shredding", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "Internal Shredding Failed..!", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                ExceptionDebugInfo(e);
-            }
-        } else {
-
-
-            /***
-             * Assuming all inputs are files, not directories
-             */
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
 
@@ -349,78 +112,877 @@ public class Generalhelper {
                 @Override
                 public void run() {
                     while (counter < total_files) {
-                        String path;
-                        for (Uri file : files) {
+
+                        Uri uri = files.get(0);
+                        String Folder_path = uri.getPath();
+                        final FileList fileList = new FileList();
+                        final List<String> ListofFiles = fileList.getFilePathList(Folder_path);
+                        int listSize = ListofFiles.size();
+                        pbar.setMax(listSize);
+                        for (String file : ListofFiles) {
                             counter++;
-                            path = file.getPath();
-                            s_fileName = path;
-                            s_file = new File(s_fileName);
-
-                            if (s_file.isDirectory()) {
-
-                                final FileList fileList = new FileList();
-                                final List<String> ListofFiles = fileList.getFilePathList(path);
-                                int listSize = ListofFiles.size();
-                                pbar.setMax(listSize);
-                                for (int i = 0; i < listSize; i++) {
-                                    path = ListofFiles.get(i);
-                                    file_path = path;
-                                    try {
-
-                                        // 1 - Operation
-
-                                        if (shredder.wipeRandom(path, false, 2, 1, Internal_Free)) {
-                                            progressBarStatus++;
-                                        }
-                                            // 2 - sleep
-                                            try {
-                                                Thread.sleep(1000);
-                                            } catch (InterruptedException e) {
-                                                e.printStackTrace();
-                                                ExceptionDebugInfo(e);
-                                            }
-                                            // 3 - update
-                                            progressbarHandler.post(new Runnable() {
-                                                public void run() {
-                                                    showProg.setText(file_path);
-                                                    pbar.setProgress(progressBarStatus);
-                                                }
-                                            });
-
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                        ExceptionDebugInfo(e);
-                                    }
+                            file_path = file;
+                            try {
+                                // 1 - Operation
+                                if (shredder.wipeDoD(file, false, false, Internal_Free)) {
+                                    progressBarStatus++;
                                 }
-//
-                            } else {
-                                path = file.getPath();
+                                // 2 - sleep
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                                // 3 - update
+                                progressbarHandler.post(new Runnable() {
+                                    public void run() {
+                                        showProg.setText(file_path);
+                                        pbar.setProgress(progressBarStatus);
+                                    }
+                                });
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                        }
+
+                        Uri Furi = files.get(0);
+                        String RDFolder_path = Furi.getPath();
+                        s_file = new File(RDFolder_path);
+                        try {
+                            FileUtils.cleanDirectory(s_file);
+                            Thread.sleep(3000);
+                            FileUtils.deleteDirectory(s_file);
+                            if (s_file.exists()) {
+                                s_file.delete();
+                            }
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                            ExceptionDebugInfo(e);
+                        }
+                    }
+                }
+            });
+            thread.start();
+
+        } else {
+
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+                    String path;
+                    for (Uri file : files) {
+                        counter++;
+                        path = file.getPath();
+                        s_fileName = path;
+                        s_file = new File(s_fileName);
+
+                        if (s_file.isDirectory()) {
+
+                            final FileList fileList = new FileList();
+                            final List<String> ListofFiles = fileList.getFilePathList(path);
+                            int listSize = ListofFiles.size();
+                            pbar.setMax(listSize);
+                            for (int i = 0; i < listSize; i++) {
+                                path = ListofFiles.get(i);
                                 file_path = path;
                                 try {
 
-                                    // 1 - operation
-                                    if (shredder.wipeRandom(path, false, 2, 1, Internal_Free)) {
+                                    // 1 - Operation
+
+                                    if (shredder.wipeDoD(path, false, false, Internal_Free)) {
                                         progressBarStatus++;
                                     }
                                     // 2 - sleep
                                     try {
-                                            Thread.sleep(1000);
-                                        } catch (InterruptedException e) {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
                                         e.printStackTrace();
                                         ExceptionDebugInfo(e);
-                                        }
-                                        // 3 - update
-                                        progressbarHandler.post(new Runnable() {
-                                            public void run() {
-                                                showProg.setText(file_path);
-                                                pbar.setProgress(progressBarStatus);
-                                            }
-                                        });
+                                    }
+                                    // 3 - update
+                                    progressbarHandler.post(() -> {
+                                        showProg.setText(file_path);
+                                        pbar.setProgress(progressBarStatus);
+                                    });
 
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                     ExceptionDebugInfo(e);
                                 }
+                            }
+//
+                        } else {
+                            path = file.getPath();
+                            file_path = path;
+                            try {
+
+                                // 1 - operation
+                                if (shredder.wipeDoD(path, false, true, Internal_Free)) {
+                                    progressBarStatus++;
+                                }
+                                // 2 - sleep
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                                // 3 - update
+                                progressbarHandler.post(() -> {
+                                    showProg.setText(file_path);
+                                    pbar.setProgress(progressBarStatus);
+                                });
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                        }
+                    }
+                }
+            });
+            thread.start();
+        }
+    }
+
+    public void CallDoDExtended(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+
+        Handler progressbarHandler = new Handler();
+        pbar.setProgress(0);
+        if (Internal_Free) {
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+
+                    Uri uri = files.get(0);
+                    String Folder_path = uri.getPath();
+                    final FileList fileList = new FileList();
+                    final List<String> ListofFiles = fileList.getFilePathList(Folder_path);
+                    int listSize = ListofFiles.size();
+                    pbar.setMax(listSize);
+                    for (String file : ListofFiles) {
+                        counter++;
+                        file_path = file;
+                        try {
+                            // 1 - Operation
+                            if (shredder.wipeDoD(file, false, true, Internal_Free)) {
+                                progressBarStatus++;
+                            }
+                            // 2 - sleep
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                            // 3 - update
+                            progressbarHandler.post(() -> {
+                                showProg.setText(file_path);
+                                pbar.setProgress(progressBarStatus);
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            ExceptionDebugInfo(e);
+                        }
+                    }
+
+                    Uri Furi = files.get(0);
+                    String RDFolder_path = Furi.getPath();
+                    s_file = new File(RDFolder_path);
+                    try {
+                        FileUtils.cleanDirectory(s_file);
+                        Thread.sleep(3000);
+                        FileUtils.deleteDirectory(s_file);
+                        if (s_file.exists()) {
+                            s_file.delete();
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                        ExceptionDebugInfo(e);
+                    }
+                }
+            });
+            thread.start();
+
+        } else {
+
+
+            /***
+             * Assuming all inputs are files, not directories
+             */
+
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+                    String path;
+                    for (Uri file : files) {
+                        counter++;
+                        path = file.getPath();
+                        s_fileName = path;
+                        s_file = new File(s_fileName);
+
+                        if (s_file.isDirectory()) {
+
+                            final FileList fileList = new FileList();
+                            final List<String> ListofFiles = fileList.getFilePathList(path);
+                            int listSize = ListofFiles.size();
+                            pbar.setMax(listSize);
+                            for (int i = 0; i < listSize; i++) {
+                                path = ListofFiles.get(i);
+                                file_path = path;
+                                try {
+
+                                    // 1 - Operation
+
+                                    if (shredder.wipeDoD(path, false, true, Internal_Free)) {
+                                        progressBarStatus++;
+                                    }
+                                    // 2 - sleep
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                        ExceptionDebugInfo(e);
+                                    }
+                                    // 3 - update
+                                    progressbarHandler.post(() -> {
+                                        showProg.setText(file_path);
+                                        pbar.setProgress(progressBarStatus);
+                                    });
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                            }
+//
+                        } else {
+                            path = file.getPath();
+                            file_path = path;
+                            try {
+
+                                // 1 - operation
+                                if (shredder.wipeDoD(path, false, true, Internal_Free)) {
+                                    progressBarStatus++;
+                                }
+                                // 2 - sleep
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                                // 3 - update
+                                progressbarHandler.post(() -> {
+                                    showProg.setText(file_path);
+                                    pbar.setProgress(progressBarStatus);
+                                });
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                        }
+                    }
+                }
+            });
+            thread.start();
+        }
+    }
+
+    public void CallVsiter(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+        Handler progressbarHandler = new Handler();
+        pbar.setProgress(0);
+        if (Internal_Free) {
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+
+                    Uri uri = files.get(0);
+                    String Folder_path = uri.getPath();
+                    final FileList fileList = new FileList();
+                    final List<String> ListofFiles = fileList.getFilePathList(Folder_path);
+                    int listSize = ListofFiles.size();
+                    pbar.setMax(listSize);
+                    for (String file : ListofFiles) {
+                        counter++;
+                        file_path = file;
+                        try {
+                            // 1 - Operation
+                            if (shredder.wipeVSITR(file, false, Internal_Free)) {
+                                progressBarStatus++;
+                            }
+                            // 2 - sleep
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                            // 3 - update
+                            progressbarHandler.post(new Runnable() {
+                                public void run() {
+                                    showProg.setText(file_path);
+                                    pbar.setProgress(progressBarStatus);
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            ExceptionDebugInfo(e);
+                        }
+                    }
+
+                    Uri Furi = files.get(0);
+                    String RDFolder_path = Furi.getPath();
+                    s_file = new File(RDFolder_path);
+                    try {
+                        FileUtils.cleanDirectory(s_file);
+                        Thread.sleep(3000);
+                        FileUtils.deleteDirectory(s_file);
+                        if (s_file.exists()) {
+                            s_file.delete();
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                        ExceptionDebugInfo(e);
+                    }
+                }
+            });
+            thread.start();
+
+        } else {
+
+
+            /***
+             * Assuming all inputs are files, not directories
+             */
+
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+                    String path;
+                    for (Uri file : files) {
+                        counter++;
+                        path = file.getPath();
+                        s_fileName = path;
+                        s_file = new File(s_fileName);
+
+                        if (s_file.isDirectory()) {
+
+                            final FileList fileList = new FileList();
+                            final List<String> ListofFiles = fileList.getFilePathList(path);
+                            int listSize = ListofFiles.size();
+                            pbar.setMax(listSize);
+                            for (int i = 0; i < listSize; i++) {
+                                path = ListofFiles.get(i);
+                                file_path = path;
+                                try {
+
+                                    // 1 - Operation
+
+                                    if (shredder.wipeVSITR(path, false, Internal_Free)) {
+                                        progressBarStatus++;
+                                    }
+                                    // 2 - sleep
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                        ExceptionDebugInfo(e);
+                                    }
+                                    // 3 - update
+                                    progressbarHandler.post(() -> {
+                                        showProg.setText(file_path);
+                                        pbar.setProgress(progressBarStatus);
+                                    });
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                            }
+//
+                        } else {
+                            path = file.getPath();
+                            file_path = path;
+                            try {
+
+                                // 1 - operation
+                                if (shredder.wipeVSITR(path, false, Internal_Free)) {
+                                    progressBarStatus++;
+                                }
+                                // 2 - sleep
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                                // 3 - update
+                                progressbarHandler.post(() -> {
+                                    showProg.setText(file_path);
+                                    pbar.setProgress(progressBarStatus);
+                                });
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                        }
+                    }
+                }
+            });
+            thread.start();
+        }
+    }
+
+    public void CallSchneire(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+        Handler progressbarHandler = new Handler();
+        pbar.setProgress(0);
+        if (Internal_Free) {
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+
+                    Uri uri = files.get(0);
+                    String Folder_path = uri.getPath();
+                    final FileList fileList = new FileList();
+                    final List<String> ListofFiles = fileList.getFilePathList(Folder_path);
+                    int listSize = ListofFiles.size();
+                    pbar.setMax(listSize);
+                    for (String file : ListofFiles) {
+                        counter++;
+                        file_path = file;
+                        try {
+                            // 1 - Operation
+                            if (shredder.wipeSchneier(file, false, Internal_Free)) {
+                                progressBarStatus++;
+                            }
+                            // 2 - sleep
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                            // 3 - update
+                            progressbarHandler.post(() -> {
+                                showProg.setText(file_path);
+                                pbar.setProgress(progressBarStatus);
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            ExceptionDebugInfo(e);
+                        }
+                    }
+
+                    Uri Furi = files.get(0);
+                    String RDFolder_path = Furi.getPath();
+                    s_file = new File(RDFolder_path);
+                    try {
+                        FileUtils.cleanDirectory(s_file);
+                        Thread.sleep(3000);
+                        FileUtils.deleteDirectory(s_file);
+                        if (s_file.exists()) {
+                            s_file.delete();
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                        ExceptionDebugInfo(e);
+                    }
+                }
+            });
+            thread.start();
+
+        } else {
+
+
+            /***
+             * Assuming all inputs are files, not directories
+             */
+
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+                    String path;
+                    for (Uri file : files) {
+                        counter++;
+                        path = file.getPath();
+                        s_fileName = path;
+                        s_file = new File(s_fileName);
+
+                        if (s_file.isDirectory()) {
+
+                            final FileList fileList = new FileList();
+                            final List<String> ListofFiles = fileList.getFilePathList(path);
+                            int listSize = ListofFiles.size();
+                            pbar.setMax(listSize);
+                            for (int i = 0; i < listSize; i++) {
+                                path = ListofFiles.get(i);
+                                file_path = path;
+                                try {
+
+                                    // 1 - Operation
+
+                                    if (shredder.wipeSchneier(path, false, Internal_Free)) {
+                                        progressBarStatus++;
+                                    }
+                                    // 2 - sleep
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                        ExceptionDebugInfo(e);
+                                    }
+                                    // 3 - update
+                                    progressbarHandler.post(() -> {
+                                        showProg.setText(file_path);
+                                        pbar.setProgress(progressBarStatus);
+                                    });
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                            }
+//
+                        } else {
+                            path = file.getPath();
+                            file_path = path;
+                            try {
+
+                                // 1 - operation
+                                if (shredder.wipeSchneier(path, false, Internal_Free)) {
+                                    progressBarStatus++;
+                                }
+                                // 2 - sleep
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                                // 3 - update
+                                progressbarHandler.post(() -> {
+                                    showProg.setText(file_path);
+                                    pbar.setProgress(progressBarStatus);
+                                });
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                        }
+                    }
+                }
+            });
+            thread.start();
+        }
+    }
+
+    public void CallGutman(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+        Handler progressbarHandler = new Handler();
+        pbar.setProgress(0);
+        if (Internal_Free) {
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+
+                    Uri uri = files.get(0);
+                    String Folder_path = uri.getPath();
+                    final FileList fileList = new FileList();
+                    final List<String> ListofFiles = fileList.getFilePathList(Folder_path);
+                    int listSize = ListofFiles.size();
+                    pbar.setMax(listSize);
+                    for (String file : ListofFiles) {
+                        counter++;
+                        file_path = file;
+                        try {
+                            // 1 - Operation
+                            if (shredder.wipeGutmann(file, false, false, Internal_Free)) {
+                                progressBarStatus++;
+                            }
+                            // 2 - sleep
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                            // 3 - update
+                            progressbarHandler.post(() -> {
+                                showProg.setText(file_path);
+                                pbar.setProgress(progressBarStatus);
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            ExceptionDebugInfo(e);
+                        }
+                    }
+
+                    Uri Furi = files.get(0);
+                    String RDFolder_path = Furi.getPath();
+                    s_file = new File(RDFolder_path);
+                    try {
+                        FileUtils.cleanDirectory(s_file);
+                        Thread.sleep(3000);
+                        FileUtils.deleteDirectory(s_file);
+                        if (s_file.exists()) {
+                            s_file.delete();
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                        ExceptionDebugInfo(e);
+                    }
+                }
+            });
+            thread.start();
+
+        } else {
+
+
+            /***
+             * Assuming all inputs are files, not directories
+             */
+
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+                    String path;
+                    for (Uri file : files) {
+                        counter++;
+                        path = file.getPath();
+                        s_fileName = path;
+                        s_file = new File(s_fileName);
+
+                        if (s_file.isDirectory()) {
+
+                            final FileList fileList = new FileList();
+                            final List<String> ListofFiles = fileList.getFilePathList(path);
+                            int listSize = ListofFiles.size();
+                            pbar.setMax(listSize);
+                            for (int i = 0; i < listSize; i++) {
+                                path = ListofFiles.get(i);
+                                file_path = path;
+                                try {
+
+                                    // 1 - Operation
+
+                                    if (shredder.wipeGutmann(path, false, false, Internal_Free)) {
+                                        progressBarStatus++;
+                                    }
+                                    // 2 - sleep
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                        ExceptionDebugInfo(e);
+                                    }
+                                    // 3 - update
+                                    progressbarHandler.post(() -> {
+                                        showProg.setText(file_path);
+                                        pbar.setProgress(progressBarStatus);
+                                    });
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                            }
+//
+                        } else {
+                            path = file.getPath();
+                            file_path = path;
+                            try {
+
+                                // 1 - operation
+                                if (shredder.wipeGutmann(path, false, false, Internal_Free)) {
+                                    progressBarStatus++;
+                                }
+                                // 2 - sleep
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                                // 3 - update
+                                progressbarHandler.post(() -> {
+                                    showProg.setText(file_path);
+                                    pbar.setProgress(progressBarStatus);
+                                });
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                        }
+                    }
+                }
+            });
+            thread.start();
+        }
+    }
+
+    public void CallOneByte(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+        Handler progressbarHandler = new Handler();
+        pbar.setProgress(0);
+        if (Internal_Free) {
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+
+                    Uri uri = files.get(0);
+                    String Folder_path = uri.getPath();
+                    final FileList fileList = new FileList();
+                    final List<String> ListofFiles = fileList.getFilePathList(Folder_path);
+                    int listSize = ListofFiles.size();
+                    pbar.setMax(listSize);
+                    for (String file : ListofFiles) {
+                        counter++;
+                        file_path = file;
+                        try {
+                            // 1 - Operation
+                            if (shredder.wipeRandom(file, false, 2, 1, Internal_Free)) {
+                                progressBarStatus++;
+                            }
+                            // 2 - sleep
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
+                            }
+                            // 3 - update
+                            progressbarHandler.post(() -> {
+                                showProg.setText(file_path);
+                                pbar.setProgress(progressBarStatus);
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            ExceptionDebugInfo(e);
+                        }
+                    }
+
+                    Uri Furi = files.get(0);
+                    String RDFolder_path = Furi.getPath();
+                    s_file = new File(RDFolder_path);
+                    try {
+                        FileUtils.cleanDirectory(s_file);
+                        Thread.sleep(3000);
+                        FileUtils.deleteDirectory(s_file);
+                        if (s_file.exists()) {
+                            s_file.delete();
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                        ExceptionDebugInfo(e);
+                    }
+                }
+            });
+            thread.start();
+
+        } else {
+
+
+            /***
+             * Assuming all inputs are files, not directories
+             */
+
+            int total_files = files.size();
+            pbar.setMax(total_files); //total size of progress bar
+
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
+                    String path;
+                    for (Uri file : files) {
+                        counter++;
+                        path = file.getPath();
+                        s_fileName = path;
+                        s_file = new File(s_fileName);
+
+                        if (s_file.isDirectory()) {
+
+                            final FileList fileList = new FileList();
+                            final List<String> ListofFiles = fileList.getFilePathList(path);
+                            int listSize = ListofFiles.size();
+                            pbar.setMax(listSize);
+                            for (int i = 0; i < listSize; i++) {
+                                path = ListofFiles.get(i);
+                                file_path = path;
+                                try {
+
+                                    // 1 - Operation
+
+                                    if (shredder.wipeRandom(path, false, 2, 1, Internal_Free)) {
+                                        progressBarStatus++;
+                                    }
+                                    // 2 - sleep
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                        ExceptionDebugInfo(e);
+                                    }
+                                    // 3 - update
+                                    progressbarHandler.post(() -> {
+                                        showProg.setText(file_path);
+                                        pbar.setProgress(progressBarStatus);
+                                    });
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                            }
+//
+                        } else {
+                            path = file.getPath();
+                            file_path = path;
+                            try {
+
+                                // 1 - operation
+                                if (shredder.wipeRandom(path, false, 2, 1, Internal_Free)) {
+                                    progressBarStatus++;
+                                }
+                                // 2 - sleep
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    ExceptionDebugInfo(e);
+                                }
+                                // 3 - update
+                                progressbarHandler.post(() -> {
+                                    showProg.setText(file_path);
+                                    pbar.setProgress(progressBarStatus);
+                                });
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                ExceptionDebugInfo(e);
                             }
                         }
                     }

@@ -105,17 +105,17 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
 
         if (SelectedAlgo != 0) {
             if (SelectedAlgo == R.id.dod) {
-                generalhelper.CallDoD(files, Internal_Free, this);
+                generalhelper.CallDoD(files, Internal_Free, progressBar, showProgress);
             } else if (SelectedAlgo == R.id.dod_ext) {
-                generalhelper.CallDoDExtended(files, Internal_Free, this);
+                generalhelper.CallDoDExtended(files, Internal_Free, progressBar, showProgress);
             } else if (SelectedAlgo == R.id.vsitr) {
-                generalhelper.CallVsiter(files, Internal_Free, this);
+                generalhelper.CallVsiter(files, Internal_Free, progressBar, showProgress);
             } else if (SelectedAlgo == R.id.schneire) {
-                generalhelper.CallSchneire(files, Internal_Free, this);
+                generalhelper.CallSchneire(files, Internal_Free, progressBar, showProgress);
             } else if (SelectedAlgo == R.id.gutman) {
-                generalhelper.CallGutman(files, Internal_Free, this);
+                generalhelper.CallGutman(files, Internal_Free, progressBar, showProgress);
             } else {
-                generalhelper.CallOneByte(files, Internal_Free, this, progressBar, showProgress);
+                generalhelper.CallOneByte(files, Internal_Free, progressBar, showProgress);
             }
         }
     }
