@@ -9,6 +9,7 @@ import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ public class Generalhelper {
     private String file_path;
     private File s_file;
     private String s_fileName;
+    private boolean check = false;
+    private String msg;
 
     public void ItemSelected(int id, Context context, Activity activity) {
         switch (id) {
@@ -837,7 +840,8 @@ public class Generalhelper {
         }
     }
 
-    public void CallOneByte(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+    public void CallOneByte(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, Activity activity, View view) {
+        view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
         if (Internal_Free) {
@@ -887,13 +891,15 @@ public class Generalhelper {
                         Thread.sleep(3000);
                         FileUtils.deleteDirectory(s_file);
                         if (s_file.exists()) {
-                            s_file.delete();
+                            check = s_file.delete();
                         }
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                         ExceptionDebugInfo(e);
                     }
                 }
+
+
             });
             thread.start();
 
@@ -950,7 +956,8 @@ public class Generalhelper {
                                     ExceptionDebugInfo(e);
                                 }
                             }
-//
+
+
                         } else {
                             path = file.getPath();
                             file_path = path;
@@ -983,6 +990,22 @@ public class Generalhelper {
             });
             thread.start();
         }
+    }
+
+    private void resultDialouge(String msg, Context context, Activity activity) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Result");
+        alertDialogBuilder
+                .setMessage("Shredding Successful " + msg)
+                .setCancelable(false)
+                .setNegativeButton("Finish", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     protected void ExceptionDebugInfo(Exception e) {

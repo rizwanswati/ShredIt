@@ -115,7 +115,7 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
             } else if (SelectedAlgo == R.id.gutman) {
                 generalhelper.CallGutman(files, Internal_Free, progressBar, showProgress);
             } else {
-                generalhelper.CallOneByte(files, Internal_Free, progressBar, showProgress);
+                generalhelper.CallOneByte(files, Internal_Free, progressBar, showProgress, this, this, view);
             }
         }
     }
