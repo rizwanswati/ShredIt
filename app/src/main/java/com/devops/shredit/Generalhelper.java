@@ -3,7 +3,6 @@ package com.devops.shredit;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
@@ -32,8 +31,9 @@ public class Generalhelper {
     private File s_file;
     private String s_fileName;
     private boolean check = false;
+    protected static boolean AppCheck = true;
 
-    public void CallDoD(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+    public void CallDoD(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view, Activity activity) {
         view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
@@ -91,14 +91,9 @@ public class Generalhelper {
                         ExceptionDebugInfo(e);
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         } else {
 
             int total_files = files.size();
@@ -176,18 +171,13 @@ public class Generalhelper {
                         }
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    public void CallDoDExtended(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+    public void CallDoDExtended(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view, Activity activity) {
         view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
@@ -245,14 +235,9 @@ public class Generalhelper {
                         ExceptionDebugInfo(e);
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         } else {
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
@@ -300,7 +285,6 @@ public class Generalhelper {
                                     ExceptionDebugInfo(e);
                                 }
                             }
-//
                         } else {
                             path = file.getPath();
                             file_path = path;
@@ -330,18 +314,13 @@ public class Generalhelper {
                         }
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    public void CallVsiter(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+    public void CallVsiter(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view, Activity activity) {
         view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
@@ -399,14 +378,9 @@ public class Generalhelper {
                         ExceptionDebugInfo(e);
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
         } else {
             int total_files = files.size();
@@ -485,18 +459,13 @@ public class Generalhelper {
                         }
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    public void CallSchneire(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+    public void CallSchneire(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view, Activity activity) {
         view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
@@ -554,15 +523,9 @@ public class Generalhelper {
                         ExceptionDebugInfo(e);
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
         } else {
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
@@ -640,18 +603,13 @@ public class Generalhelper {
                         }
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    public void CallGutman(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+    public void CallGutman(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view, Activity activity) {
         view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
@@ -709,14 +667,9 @@ public class Generalhelper {
                         ExceptionDebugInfo(e);
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
         } else {
             int total_files = files.size();
@@ -795,14 +748,9 @@ public class Generalhelper {
                         }
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -864,17 +812,9 @@ public class Generalhelper {
                         ExceptionDebugInfo(e);
                     }
                 }
-
-
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
         } else {
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
@@ -953,14 +893,9 @@ public class Generalhelper {
                         }
                     }
                 }
+                activity.runOnUiThread(() -> resultDialouge("Click Finish to go to Home Screen", context));
             });
             thread.start();
-            try {
-                thread.join();
-                resultDialouge("Click Finish to go to Home Screen", context);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 

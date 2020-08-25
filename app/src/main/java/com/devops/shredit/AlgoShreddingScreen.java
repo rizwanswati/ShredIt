@@ -38,6 +38,7 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
     int progress = 0;
     private int SelectedAlgo = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,15 +106,15 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
 
         if (SelectedAlgo != 0) {
             if (SelectedAlgo == R.id.dod) {
-                generalhelper.CallDoD(files, Internal_Free, progressBar, showProgress, this, view);
+                generalhelper.CallDoD(files, Internal_Free, progressBar, showProgress, this, view, this);
             } else if (SelectedAlgo == R.id.dod_ext) {
-                generalhelper.CallDoDExtended(files, Internal_Free, progressBar, showProgress, this, view);
+                generalhelper.CallDoDExtended(files, Internal_Free, progressBar, showProgress, this, view, this);
             } else if (SelectedAlgo == R.id.vsitr) {
-                generalhelper.CallVsiter(files, Internal_Free, progressBar, showProgress, this, view);
+                generalhelper.CallVsiter(files, Internal_Free, progressBar, showProgress, this, view, this);
             } else if (SelectedAlgo == R.id.schneire) {
-                generalhelper.CallSchneire(files, Internal_Free, progressBar, showProgress, this, view);
+                generalhelper.CallSchneire(files, Internal_Free, progressBar, showProgress, this, view, this);
             } else if (SelectedAlgo == R.id.gutman) {
-                generalhelper.CallGutman(files, Internal_Free, progressBar, showProgress, this, view);
+                generalhelper.CallGutman(files, Internal_Free, progressBar, showProgress, this, view, this);
             } else {
                 generalhelper.CallOneByte(files, Internal_Free, progressBar, showProgress, this, this, view);
             }

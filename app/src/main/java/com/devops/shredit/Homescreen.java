@@ -22,9 +22,6 @@ import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
 import com.aditya.filebrowser.FolderChooser;
 import com.google.android.material.navigation.NavigationView;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Homescreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,7 +54,14 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-        security.AppAuthenticate(this, this);
+        if (Generalhelper.AppCheck) {
+            security.AppAuthenticate(this, this);
+            Generalhelper.AppCheck = false;
+        } else {
+            designedViews.setHomeScreen(this);
+            navigationView = designedViews.setNavigationContents(this, this);
+            navigationView.setNavigationItemSelectedListener(this);
+        }
         permission.AppPermissions(this, this);
     }
 
