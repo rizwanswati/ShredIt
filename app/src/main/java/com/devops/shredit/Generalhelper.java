@@ -32,136 +32,73 @@ public class Generalhelper {
     private File s_file;
     private String s_fileName;
     private boolean check = false;
-    private String msg;
 
-    public void ItemSelected(int id, Context context, Activity activity) {
-        switch (id) {
-            case R.id.exit:
-                ExitDialouge(context, activity);
-                break;
-            case R.id.about:
-                intentCaller.CallAbout(context, About.class);
-                break;
-            case R.id.help:
-                intentCaller.CallHelp(context, Help.class);
-                break;
-            case R.id.support:
-                intentCaller.CallSupport(context, Support.class);
-                break;
-            case R.id.homescr:
-                intentCaller.CallHome(context, Homescreen.class);
-                break;
-
-        }
-    }
-
-    private void ExitDialouge(Context context, Activity activity) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        alertDialogBuilder.setTitle("Exit Application?");
-        alertDialogBuilder
-                .setMessage("Click yes to exit!")
-                .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                activity.moveTaskToBack(true);
-                                android.os.Process.killProcess(android.os.Process.myPid());
-                                System.exit(1);
-                            }
-                        })
-
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    protected void AppExitWithoutDialouge(Activity activity) {
-        activity.moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(0);
-    }
-
-    protected void ShareApp(Context context) {
-        ApplicationInfo api = context.getApplicationContext().getApplicationInfo();
-        String apkpath = api.sourceDir;
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("application/vnd.android.package-archive");
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
-        context.startActivity(Intent.createChooser(intent, "Share App"));
-    }
-
-    public void CallDoD(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+    public void CallDoD(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+        view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
         if (Internal_Free) {
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
 
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (counter < total_files) {
+            Thread thread = new Thread(() -> {
+                while (counter < total_files) {
 
-                        Uri uri = files.get(0);
-                        String Folder_path = uri.getPath();
-                        final FileList fileList = new FileList();
-                        final List<String> ListofFiles = fileList.getFilePathList(Folder_path);
-                        int listSize = ListofFiles.size();
-                        pbar.setMax(listSize);
-                        for (String file : ListofFiles) {
-                            counter++;
-                            file_path = file;
+                    Uri uri = files.get(0);
+                    String Folder_path = uri.getPath();
+                    final FileList fileList = new FileList();
+                    final List<String> ListofFiles = fileList.getFilePathList(Folder_path);
+                    int listSize = ListofFiles.size();
+                    pbar.setMax(listSize);
+                    for (String file : ListofFiles) {
+                        counter++;
+                        file_path = file;
+                        try {
+                            // 1 - Operation
+                            if (shredder.wipeDoD(file, false, false, Internal_Free)) {
+                                progressBarStatus++;
+                            }
+                            // 2 - sleep
                             try {
-                                // 1 - Operation
-                                if (shredder.wipeDoD(file, false, false, Internal_Free)) {
-                                    progressBarStatus++;
-                                }
-                                // 2 - sleep
-                                try {
-                                    Thread.sleep(500);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                    ExceptionDebugInfo(e);
-                                }
-                                // 3 - update
-                                progressbarHandler.post(new Runnable() {
-                                    public void run() {
-                                        showProg.setText(file_path);
-                                        pbar.setProgress(progressBarStatus);
-                                    }
-                                });
-                            } catch (IOException e) {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
                                 e.printStackTrace();
                                 ExceptionDebugInfo(e);
                             }
-                        }
-
-                        Uri Furi = files.get(0);
-                        String RDFolder_path = Furi.getPath();
-                        s_file = new File(RDFolder_path);
-                        try {
-                            FileUtils.cleanDirectory(s_file);
-                            Thread.sleep(3000);
-                            FileUtils.deleteDirectory(s_file);
-                            if (s_file.exists()) {
-                                s_file.delete();
-                            }
-                        } catch (IOException | InterruptedException e) {
+                            // 3 - update
+                            progressbarHandler.post(() -> {
+                                showProg.setText(file_path);
+                                pbar.setProgress(progressBarStatus);
+                            });
+                        } catch (IOException e) {
                             e.printStackTrace();
                             ExceptionDebugInfo(e);
                         }
                     }
+
+                    Uri Furi = files.get(0);
+                    String RDFolder_path = Furi.getPath();
+                    s_file = new File(RDFolder_path);
+                    try {
+                        FileUtils.cleanDirectory(s_file);
+                        Thread.sleep(3000);
+                        FileUtils.deleteDirectory(s_file);
+                        if (s_file.exists()) {
+                            check = s_file.delete();
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                        ExceptionDebugInfo(e);
+                    }
                 }
             });
             thread.start();
-
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else {
 
             int total_files = files.size();
@@ -210,7 +147,6 @@ public class Generalhelper {
                                     ExceptionDebugInfo(e);
                                 }
                             }
-//
                         } else {
                             path = file.getPath();
                             file_path = path;
@@ -242,11 +178,17 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void CallDoDExtended(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
-
+    public void CallDoDExtended(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+        view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
         if (Internal_Free) {
@@ -296,7 +238,7 @@ public class Generalhelper {
                         Thread.sleep(3000);
                         FileUtils.deleteDirectory(s_file);
                         if (s_file.exists()) {
-                            s_file.delete();
+                            check = s_file.delete();
                         }
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
@@ -305,14 +247,13 @@ public class Generalhelper {
                 }
             });
             thread.start();
-
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else {
-
-
-            /***
-             * Assuming all inputs are files, not directories
-             */
-
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
 
@@ -391,10 +332,17 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void CallVsiter(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+    public void CallVsiter(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+        view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
         if (Internal_Free) {
@@ -426,11 +374,9 @@ public class Generalhelper {
                                 ExceptionDebugInfo(e);
                             }
                             // 3 - update
-                            progressbarHandler.post(new Runnable() {
-                                public void run() {
-                                    showProg.setText(file_path);
-                                    pbar.setProgress(progressBarStatus);
-                                }
+                            progressbarHandler.post(() -> {
+                                showProg.setText(file_path);
+                                pbar.setProgress(progressBarStatus);
                             });
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -446,7 +392,7 @@ public class Generalhelper {
                         Thread.sleep(3000);
                         FileUtils.deleteDirectory(s_file);
                         if (s_file.exists()) {
-                            s_file.delete();
+                            check = s_file.delete();
                         }
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
@@ -455,14 +401,14 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         } else {
-
-
-            /***
-             * Assuming all inputs are files, not directories
-             */
-
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
 
@@ -541,10 +487,17 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void CallSchneire(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+    public void CallSchneire(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+        view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
         if (Internal_Free) {
@@ -594,7 +547,7 @@ public class Generalhelper {
                         Thread.sleep(3000);
                         FileUtils.deleteDirectory(s_file);
                         if (s_file.exists()) {
-                            s_file.delete();
+                            check = s_file.delete();
                         }
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
@@ -603,14 +556,14 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         } else {
-
-
-            /***
-             * Assuming all inputs are files, not directories
-             */
-
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
 
@@ -689,10 +642,17 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void CallGutman(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg) {
+    public void CallGutman(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view) {
+        view.setEnabled(false);
         Handler progressbarHandler = new Handler();
         pbar.setProgress(0);
         if (Internal_Free) {
@@ -742,7 +702,7 @@ public class Generalhelper {
                         Thread.sleep(3000);
                         FileUtils.deleteDirectory(s_file);
                         if (s_file.exists()) {
-                            s_file.delete();
+                            check = s_file.delete();
                         }
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
@@ -751,14 +711,14 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         } else {
-
-
-            /***
-             * Assuming all inputs are files, not directories
-             */
-
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
 
@@ -837,6 +797,12 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -902,14 +868,14 @@ public class Generalhelper {
 
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         } else {
-
-
-            /***
-             * Assuming all inputs are files, not directories
-             */
-
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
 
@@ -989,20 +955,22 @@ public class Generalhelper {
                 }
             });
             thread.start();
+            try {
+                thread.join();
+                resultDialouge("Click Finish to go to Home Screen", context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void resultDialouge(String msg, Context context, Activity activity) {
+    private void resultDialouge(String msg, Context context) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Result");
         alertDialogBuilder
-                .setMessage("Shredding Successful " + msg)
+                .setMessage("Shredding Successful. " + msg)
                 .setCancelable(false)
-                .setNegativeButton("Finish", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton("Finish", (dialog, id) -> intentCaller.CallHome(context, Homescreen.class));
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -1017,5 +985,61 @@ public class Generalhelper {
             Log.e("Sys_Debug", "\t" + element.getMethodName());
             Log.e("Sys_Debug", "\t" + element.getLineNumber());
         }
+    }
+
+    public void ItemSelected(int id, Context context, Activity activity) {
+        switch (id) {
+            case R.id.exit:
+                ExitDialouge(context, activity);
+                break;
+            case R.id.about:
+                intentCaller.CallAbout(context, About.class);
+                break;
+            case R.id.help:
+                intentCaller.CallHelp(context, Help.class);
+                break;
+            case R.id.support:
+                intentCaller.CallSupport(context, Support.class);
+                break;
+            case R.id.homescr:
+                intentCaller.CallHome(context, Homescreen.class);
+                break;
+
+        }
+    }
+
+    private void ExitDialouge(Context context, Activity activity) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Exit Application?");
+        alertDialogBuilder
+                .setMessage("Click yes to exit!")
+                .setCancelable(false)
+                .setPositiveButton("Yes",
+                        (dialog, id) -> {
+                            activity.moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(1);
+                        })
+
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    protected void AppExitWithoutDialouge(Activity activity) {
+        activity.moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+    }
+
+    protected void ShareApp(Context context) {
+        ApplicationInfo api = context.getApplicationContext().getApplicationInfo();
+        String apkpath = api.sourceDir;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("application/vnd.android.package-archive");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkpath)));
+        context.startActivity(Intent.createChooser(intent, "Share App"));
     }
 }

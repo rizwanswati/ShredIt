@@ -1,8 +1,6 @@
 package com.devops.shredit;
 
-import android.os.Handler;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,9 +11,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
 
 public class Shredder {
 
@@ -121,14 +116,6 @@ public class Shredder {
     private SecureRandom s_random = null;
     private Integer[] s_sequence = null;
 
-    /**
-     * Logger for this class
-     */
-
-
-    /**
-     * Creates an instance of AtaraxisShredder
-     */
     public Shredder() {
         // empty constructor
     }
@@ -707,7 +694,6 @@ public class Shredder {
         return true;
     }
 
-
     private final boolean writeRandomPatterns() throws IOException {
 
         final int arrayLength = 1024;
@@ -732,7 +718,6 @@ public class Shredder {
         os.close();
         return true;
     }
-
     // slow
     private final boolean writeRandomBytes() throws IOException {
 
@@ -863,7 +848,6 @@ public class Shredder {
                 position++;
             } else {
                 randomInt = random.nextInt(51);
-                ;
                 if (randomInt < 25)
                     randomInt = randomInt + 65;
                 else
@@ -890,6 +874,4 @@ public class Shredder {
         }
 
     }
-
-
 }

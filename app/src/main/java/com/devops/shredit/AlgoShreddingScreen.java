@@ -105,15 +105,15 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
 
         if (SelectedAlgo != 0) {
             if (SelectedAlgo == R.id.dod) {
-                generalhelper.CallDoD(files, Internal_Free, progressBar, showProgress);
+                generalhelper.CallDoD(files, Internal_Free, progressBar, showProgress, this, view);
             } else if (SelectedAlgo == R.id.dod_ext) {
-                generalhelper.CallDoDExtended(files, Internal_Free, progressBar, showProgress);
+                generalhelper.CallDoDExtended(files, Internal_Free, progressBar, showProgress, this, view);
             } else if (SelectedAlgo == R.id.vsitr) {
-                generalhelper.CallVsiter(files, Internal_Free, progressBar, showProgress);
+                generalhelper.CallVsiter(files, Internal_Free, progressBar, showProgress, this, view);
             } else if (SelectedAlgo == R.id.schneire) {
-                generalhelper.CallSchneire(files, Internal_Free, progressBar, showProgress);
+                generalhelper.CallSchneire(files, Internal_Free, progressBar, showProgress, this, view);
             } else if (SelectedAlgo == R.id.gutman) {
-                generalhelper.CallGutman(files, Internal_Free, progressBar, showProgress);
+                generalhelper.CallGutman(files, Internal_Free, progressBar, showProgress, this, view);
             } else {
                 generalhelper.CallOneByte(files, Internal_Free, progressBar, showProgress, this, this, view);
             }
@@ -156,7 +156,7 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
                     break;
 
                 default:
-                    Toast.makeText(this, "Nothing Selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Nothing is selected", Toast.LENGTH_SHORT).show();
             }
         }
     }
