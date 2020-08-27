@@ -23,7 +23,7 @@ public class Help extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
-        navigationView = designedViews.setNavigationContents(this, this);
+        navigationView = designedViews.setNavigationContents(this, this, "Help");
         navigationView.setNavigationItemSelectedListener(this);
     }
 

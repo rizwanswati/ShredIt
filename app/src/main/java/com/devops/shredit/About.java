@@ -23,7 +23,7 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        navigationView = designedViews.setNavigationContents(this, this);
+        navigationView = designedViews.setNavigationContents(this, this, "About");
         navigationView.setNavigationItemSelectedListener(this);
     }
 

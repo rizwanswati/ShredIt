@@ -43,7 +43,7 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_algo_shredding_screen);
-        navigationView = designedViews.setNavigationContents(this, this);
+        navigationView = designedViews.setNavigationContents(this, this, "Algorithms");
         navigationView.setNavigationItemSelectedListener(this);
 
         one_byte = findViewById(R.id.one_byte);

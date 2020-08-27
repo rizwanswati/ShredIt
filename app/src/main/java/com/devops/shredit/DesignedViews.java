@@ -1,17 +1,11 @@
 package com.devops.shredit;
 
 import android.app.Activity;
-import android.content.Context;
-import android.view.View;
-
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Objects;
 
 public class DesignedViews {
 
@@ -24,7 +18,7 @@ public class DesignedViews {
     }
 
 
-    protected NavigationView setNavigationContents(AppCompatActivity homescreen, Activity activity) {
+    protected NavigationView setNavigationContents(AppCompatActivity homescreen, Activity activity, String Title) {
 
         /*------------------Attachments----------------------*/
         drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
@@ -34,7 +28,7 @@ public class DesignedViews {
 
         /*----------------Using custom toolbar as actionbar-----------------*/
         homescreen.setSupportActionBar(toolbar);
-
+        toolbar.setTitle(Title);
 
         /*--------------------------Drawer Toggle------------------------*/
         navigationView.bringToFront();

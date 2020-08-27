@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/main_screen_bgColor"
     android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".Support">
 
 
@@ -24,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:weightSum="15">
+        android:weightSum="14.5">
 
         <LinearLayout
             android:id="@+id/mycontainer"
@@ -37,6 +39,77 @@
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar"></include>
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="13.4"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:weightSum="13.4">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3" />
+
+            <EditText
+                android:id="@+id/et_to"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round"
+                android:hint="  To"></EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3" />
+
+            <EditText
+                android:id="@+id/sub"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round"
+                android:hint="  Subject"></EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3" />
+
+            <EditText
+                android:id="@+id/messag"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8.7"
+                android:background="@drawable/bg_round"
+                android:gravity="top"
+                android:hint="  Message"></EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.2"
+                android:background="@drawable/shredbutton"
+                android:onClick="SendEmail"
+                android:text="Send"
+                android:textColor="@color/whitish"></Button>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

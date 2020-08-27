@@ -59,7 +59,7 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
             Generalhelper.AppCheck = false;
         } else {
             designedViews.setHomeScreen(this);
-            navigationView = designedViews.setNavigationContents(this, this);
+            navigationView = designedViews.setNavigationContents(this, this, "Shred It");
             navigationView.setNavigationItemSelectedListener(this);
         }
         permission.AppPermissions(this, this);
@@ -146,7 +146,7 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
         if (requestCode == Security.INTENT_AUTHENTICATE) {
             if (security.AuthenticateReqResult(resultCode)) {
                 designedViews.setHomeScreen(this);
-                navigationView = designedViews.setNavigationContents(this, this);
+                navigationView = designedViews.setNavigationContents(this, this, "Shred It");
                 navigationView.setNavigationItemSelectedListener(this);
 
             } else {
