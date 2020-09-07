@@ -26,15 +26,35 @@
     <string name="shred_IS">Press for Shredding Internal Storage</string>
     <string name="shred_ES">Press for Shredding External Storage</string>
     <string name="check_Fs">Check Free Space</string>
-
     <string name="one_byte">One Byte</string>
+
+    <!-- Algorithms Names  -->
+
     <string name="gutman">Gutman 35 Pass</string>
     <string name="VSITR">German VSITR</string>
     <string name="schneire">Schneire</string>
     <string name="DoD">US DoD</string>
     <string name="DoD_Ext">DoD Extended</string>
-
     <string name="shredding_btn">Start Shredding</string>
 
+    <!--  Algorithms' Description  -->
+    <string name="des_one_byte"><b><u>One Byte:</u></b>
+        Use this method to overwrite a file only once with <i>random secure</i> bytes. It is fast
+    but less secure.</string>
+    <string name="des_VSITR"><b><u>German VSITR:</u></b>
+        <i>German Federal Office for IT Security</i> uses this method. Employ this method to overwrtie
+        a file with secure bytes 7 times and an additional random byte pass. Secure but slower</string>
+    <string name="des_gutman"><b><u>Peter Gutman:</u></b>
+        <i>35 Pass Algorithm.</i> File will undergo 4 random,27 pattern and
+    finally, 4 additional random passes. Securest of them all but also the slowest. Do not use this
+    unless very very cautious about the data. it will take a lot of time to finish.</string>
+    <string name="des_schneier"><b><u>Bruce Schneier:</u></b>
+        File will undergo 2 pattern and 5 additional random passes. </string>
+    <string name="des_DoD"><b><u><i>Standard</i> US DoD:</u></b>
+        Standard US department of defense 520.22-M (E) algorithm. Secure erase the file by overwriting
+    it by 3 random passes. US DoD erases their digital data using this algorithm</string>
+    <string name="des_DoD_ext"><b><u><i>Extended</i> US DoD:</u></b>
+        Extended US department of defense 520.22-M (ECE) algorithm. Secure erase the file by overwriting
+    it by 3 random passes and 4 pattern passes. US DoD erases their digital data using this algorithm</string>
 
 </resources>

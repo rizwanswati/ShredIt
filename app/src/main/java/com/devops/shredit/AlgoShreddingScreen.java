@@ -21,9 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-
 public class AlgoShreddingScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CompoundButton.OnCheckedChangeListener {
-
 
     ObjectGenerator objectGenerator = new ObjectGenerator();
     DesignedViews designedViews = objectGenerator.DesignViewObj();

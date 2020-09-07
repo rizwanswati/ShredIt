@@ -120,6 +120,7 @@ public class Shredder {
         // empty constructor
     }
 
+
     /**
      * Use this method if you want to specify yourself with which byte value the
      * data shall once be overwritten.

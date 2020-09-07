@@ -33,6 +33,7 @@ public class Generalhelper {
     private boolean check = false;
     protected static boolean AppCheck = true;
 
+
     public void CallDoD(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view, Activity activity) {
         view.setEnabled(false);
         Handler progressbarHandler = new Handler();
@@ -898,6 +899,7 @@ public class Generalhelper {
             thread.start();
         }
     }
+
 
     private void resultDialouge(String msg, Context context) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
