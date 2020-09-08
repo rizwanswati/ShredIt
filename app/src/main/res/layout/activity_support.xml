@@ -60,6 +60,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_round"
+                android:enabled="false"
+                android:text="@string/email"
                 android:hint="  To"></EditText>
 
             <View

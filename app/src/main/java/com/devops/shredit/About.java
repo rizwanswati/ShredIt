@@ -6,8 +6,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -18,6 +20,7 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
     Generalhelper generalhelper = objectGenerator.GeneralHelperObj();
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    TextView linked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,9 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
         setContentView(R.layout.activity_about);
         navigationView = designedViews.setNavigationContents(this, this, "About");
         navigationView.setNavigationItemSelectedListener(this);
+
+        linked = findViewById(R.id.linkedin);
+        linked.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override

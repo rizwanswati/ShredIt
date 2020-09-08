@@ -38,6 +38,7 @@
     <string name="shredding_btn">Start Shredding</string>
 
     <!--  Algorithms' Description  -->
+
     <string name="des_one_byte"><b><u>One Byte:</u></b>
         Use this method to overwrite a file only once with <i>random secure</i> bytes. It is fast
     but less secure.</string>
@@ -57,4 +58,18 @@
         Extended US department of defense 520.22-M (ECE) algorithm. Secure erase the file by overwriting
     it by 3 random passes and 4 pattern passes. US DoD erases their digital data using this algorithm</string>
 
+    <!-- App's Meta -->
+    <string name="email">rizwan.akhwandzada@gmail.com</string>
+    <string name="appName">SHRED IT</string>
+    <string name="appSubtitle">for Android</string>
+    <string name="version">Version 1.0</string>
+    <string name="tagLine">Shredd It is a free software</string>
+
+    <!--  Developer's Details  -->
+    <string name="devName">Rizwan Ullah</string>
+    <string name="comp">Code Protocol</string>
+    <string name="Email">@string/email</string>
+    <string name="linkedIn"><a href="https://www.linkedin.com/in/rizwan-ullah-b1b44aa7/">Rizwan Ullah</a></string>
+    <string name="whatsapp">+923122077722</string>
+    <string name="rights">Copy Right @2020 - Code Protocol. All Rights Reserved</string>
 </resources>

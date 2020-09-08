@@ -38,6 +38,152 @@
                 layout="@layout/toolbar"></include>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"></View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:gravity="center_horizontal"
+            android:text="@string/appName"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:text="@string/appSubtitle"
+            android:textColor="@color/full_black"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:text="@string/version"
+            android:textColor="@color/full_black"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:text="@string/tagLine"
+            android:textColor="@color/Title_Black"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.8"></View>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.8"
+            android:src="@drawable/developer"></ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:text="@string/devName"
+            android:textColor="@color/Title_Black"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.8"
+            android:src="@drawable/linkedin"></ImageView>
+
+        <TextView
+            android:id="@+id/linkedin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:linksClickable="true"
+            android:text="@string/linkedIn"
+            android:textColor="@color/Title_Black"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.8"
+            android:src="@drawable/email"></ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:text="@string/email"
+            android:textColor="@color/Title_Black"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.8"
+            android:src="@drawable/whatsapp"></ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:text="@string/whatsapp"
+            android:textColor="@color/Title_Black"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"></View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:gravity="center_horizontal"
+            android:text="@string/comp"
+            android:textColor="@color/Title_Black"
+            android:textSize="15sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:gravity="center_horizontal"
+            android:text="@string/rights"
+            android:textColor="@color/Title_Black"
+            android:textSize="15sp"
+            android:textStyle="bold"></TextView>
+
     </LinearLayout>
 
 

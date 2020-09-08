@@ -36,7 +36,7 @@ public class Support extends AppCompatActivity implements NavigationView.OnNavig
         et_sub = findViewById(R.id.sub);
         et_message = findViewById(R.id.messag);
 
-        navigationView = designedViews.setNavigationContents(this, this, "Support");
+        navigationView = designedViews.setNavigationContents(this, this, "Contact Us");
         navigationView.setNavigationItemSelectedListener(this);
     }
 
