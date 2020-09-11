@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 
@@ -31,7 +35,6 @@ public class Generalhelper {
     private File s_file;
     private String s_fileName;
     private boolean check = false;
-    protected static boolean AppCheck = true;
 
 
     public void CallDoD(ArrayList<Uri> files, boolean Internal_Free, ProgressBar pbar, TextView showProg, Context context, View view, Activity activity) {
@@ -819,7 +822,6 @@ public class Generalhelper {
         } else {
             int total_files = files.size();
             pbar.setMax(total_files); //total size of progress bar
-
             Thread thread = new Thread(() -> {
                 while (counter < total_files) {
                     String path;
@@ -941,8 +943,29 @@ public class Generalhelper {
             case R.id.homescr:
                 intentCaller.CallHome(context, Homescreen.class);
                 break;
-
+            case R.id.nav_switch:
+                Switch navSwitch = activity.findViewById(R.id.nav_switch);
+                navSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        SharedPreferences securityPref = context.getSharedPreferences("APP_GUARD", 0);
+                        SharedPreferences.Editor edit = securityPref.edit();
+                        edit.putBoolean("key", isChecked);
+                        edit.commit();
+                        if (isChecked) {
+                            Toast.makeText(context, "AppGaurd Activated", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "AppGaurd Deactivated", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         }
+    }
+
+    protected boolean appGuard(SharedPreferences settings, Context context, String PREFS_NAME) {
+        settings = context.getSharedPreferences(PREFS_NAME, 0);
+        boolean check = settings.getBoolean("key", true);
+        return check;
     }
 
     private void ExitDialouge(Context context, Activity activity) {

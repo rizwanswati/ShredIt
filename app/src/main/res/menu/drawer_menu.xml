@@ -7,7 +7,13 @@
             android:id="@+id/nav_switch"
             android:icon="@drawable/verifieduser24px"
             android:title="Security"
-            app:actionLayout="@layout/pass_switch" />
+            app:actionViewClass="android.widget.Switch" />
+
+        <!--        <item android:id="@+id/nav_switch"-->
+        <!--            app:actionLayout="@layout/pass_switch"-->
+        <!--            android:title="Security"-->
+        <!--            android:icon="@drawable/verifieduser24px"/>-->
+
 
         <item
             android:id="@+id/homescr"
@@ -37,5 +43,6 @@
             android:title="Exit" />
 
     </group>
+
 
 </menu>

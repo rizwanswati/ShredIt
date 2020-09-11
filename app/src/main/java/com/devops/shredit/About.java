@@ -62,9 +62,12 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
         generalhelper.ItemSelected(item.getItemId(), this, this);
         drawerLayout = findViewById(R.id.drawer_layout);
-        drawerLayout.closeDrawer(GravityCompat.START);
+        if (id != R.id.nav_switch) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 }

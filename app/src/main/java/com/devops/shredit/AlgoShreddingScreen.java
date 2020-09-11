@@ -26,8 +26,10 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
     ObjectGenerator objectGenerator = new ObjectGenerator();
     DesignedViews designedViews = objectGenerator.DesignViewObj();
     Generalhelper generalhelper = objectGenerator.GeneralHelperObj();
+
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+
     ArrayList<Uri> files;
     RadioButton one_byte, gutman, vister, schneire, dod, dod_ext;
     boolean Internal_Free = false;
@@ -90,13 +92,15 @@ public class AlgoShreddingScreen extends AppCompatActivity implements Navigation
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
         generalhelper.ItemSelected(item.getItemId(), this, this);
         drawerLayout = findViewById(R.id.drawer_layout);
-        drawerLayout.closeDrawer(GravityCompat.START);
+        if (id != R.id.nav_switch) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
         return true;
 
     }
-
 
     public void BeginShredding(View view) {
         progressBar = findViewById(R.id.pbar);

@@ -3,25 +3,29 @@ package com.devops.shredit;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.Preference;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
 import com.aditya.filebrowser.FolderChooser;
 import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 
 public class Homescreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,15 +33,19 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
     public static final String TAG = "PATH";
 
 
-    public static final int WRITE_PERMISSION = 001;
-    public static final int READ_PERMISSION = 002;
+    private static final int WRITE_PERMISSION = 001;
+    private static final int READ_PERMISSION = 002;
     private static final int FILE_PICKER_REQUEST_CODE = 1001;
     private static final int DIRECTORY_REQUEST_CODE = 1002;
-    public static final int REMOVABLE_STORAGE_REQUEST = 003;
+    private static final int REMOVABLE_STORAGE_REQUEST = 003;
+    private static final String SEC_PREF = "APP_GUARD";
+    private static boolean Check;
 
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    Switch passSwtich;
+    SharedPreferences securityPref;
 
 
     /*Singleton Pattern Implementation*/
@@ -54,15 +62,19 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-        if (Generalhelper.AppCheck) {
+
+
+        Check = generalhelper.appGuard(securityPref, this, SEC_PREF);
+
+        if (Check) {
             security.AppAuthenticate(this, this);
-            Generalhelper.AppCheck = false;
         } else {
             designedViews.setHomeScreen(this);
             navigationView = designedViews.setNavigationContents(this, this, "Shred It");
             navigationView.setNavigationItemSelectedListener(this);
         }
         permission.AppPermissions(this, this);
+
     }
 
     @Override
@@ -79,9 +91,12 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        int id = item.getItemId();
         generalhelper.ItemSelected(item.getItemId(), this, this);
         drawerLayout = findViewById(R.id.drawer_layout);
-        drawerLayout.closeDrawer(GravityCompat.START);
+        if (id != R.id.nav_switch) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 
@@ -143,42 +158,44 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
             }
         }
 
+
+        if (requestCode == REMOVABLE_STORAGE_REQUEST && resultCode == RESULT_OK) {
+            Uri treeUri = data.getData();
+            grantUriPermission(getPackageName(), treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            getContentResolver().takePersistableUriPermission(treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            DocumentFile pickedDir = DocumentFile.fromTreeUri(this, treeUri);
+            //   String sd_path = FileHelper.getRemoveableMedia(this,true);
+
+
+            Uri RM_uri = Uri.parse(String.valueOf(pickedDir.getUri()));
+            String LastPathSegment = RM_uri.getLastPathSegment();
+
+            Uri uri = Uri.parse(LastPathSegment);
+            ArrayList<Uri> rootPath = new ArrayList<>();
+            rootPath.add(uri);
+            Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show();
+            //intentCaller.callWipeAlgorithms(this, rootPath, AlgoShreddingScreen.class, false);
+
+//            preference = getSharedPreferences("MyShared" , MODE_PRIVATE) ;
+//            SharedPreferences.Editor editor = preferences.edit() ;
+//            editor.putString("Dir" , treeUri.toString());
+//            editor.commit() ;
+
+        }
+
         if (requestCode == Security.INTENT_AUTHENTICATE) {
             if (security.AuthenticateReqResult(resultCode)) {
                 designedViews.setHomeScreen(this);
                 navigationView = designedViews.setNavigationContents(this, this, "Shred It");
                 navigationView.setNavigationItemSelectedListener(this);
+                navigationView.getMenu().findItem(R.id.nav_switch)
+                        .setActionView(new Switch(this));
+                ((Switch) navigationView.getMenu().findItem(R.id.nav_switch).getActionView()).setChecked(Check);
 
             } else {
                 generalhelper.AppExitWithoutDialouge(this);
             }
         }
-
-//        if (requestCode==REMOVABLE_STORAGE_REQUEST && resultCode==RESULT_OK)
-//        {
-//            Toast.makeText(this, "Under development", Toast.LENGTH_SHORT).show();
-////            Uri treeUri = data.getData();
-////            grantUriPermission(getPackageName(), treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-////            getContentResolver().takePersistableUriPermission(treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);//            Shredder = new Shredder();
-////
-////            DocumentFile pickedDir = DocumentFile.fromTreeUri(this, treeUri);
-////            DocumentFile[] files = pickedDir.listFiles();
-////
-////            String sd_path = FileHelper.getRemoveableMedia(this,true);
-////            //String sd_path = treeUri.getEncodedPath();
-////            try {
-////                Shredder.wipeDoD(sd_path, false, false);
-////            } catch (Exception e){
-////                e.printStackTrace();
-////            }
-////
-////
-//////            preference = getSharedPreferences("MyShared" , MODE_PRIVATE) ;
-//////            SharedPreferences.Editor editor = preferences.edit() ;
-//////            editor.putString("Dir" , treeUri.toString());
-//////            editor.commit() ;
-////
-//        }
     }
 
     @Override
@@ -214,7 +231,8 @@ public class Homescreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
     public void shredRemovable(View view) {
-        Toast.makeText(this, "Under development", Toast.LENGTH_SHORT).show();
-//        startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), REMOVABLE_STORAGE_REQUEST);
+//        Toast.makeText(this, "Under development", Toast.LENGTH_SHORT).show();
+        startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), REMOVABLE_STORAGE_REQUEST);
     }
+
 }
