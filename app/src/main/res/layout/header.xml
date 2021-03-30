@@ -10,7 +10,7 @@
         android:layout_width="87dp"
         android:layout_height="98dp"
         android:paddingLeft="8dp"
-        android:src="@drawable/circlecropped"></ImageView>
+        android:src="@drawable/logo73x73"></ImageView>
 
     <TextView
         android:layout_width="wrap_content"

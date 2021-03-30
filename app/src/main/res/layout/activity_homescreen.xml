@@ -51,9 +51,9 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:contentDescription="@string/logo"
-                    android:src="@drawable/circlecropped">
+                    android:src="@drawable/logo73x73">
 
                 </ImageView>
 
